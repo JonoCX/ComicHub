@@ -1,13 +1,27 @@
 <resources>
 
     <color name="main_purple">#202857</color>
+    <color name="white">#ffffff</color>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/main_purple</item>
         <item name="colorPrimaryDark">@color/main_purple</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:buttonStyle">@style/FontButton</item>
+    </style>
+
+    <style name="FontButton" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">Ubuntu-L.tff</item>
+    </style>
+
+    <style name="TextView" parent="android:Widget.TextView">
+        <item name="android:fontFamily">Ubuntu-L.tff</item>
+    </style>
+
+    <style name="TextFields" parent="android:Widget.EditText">
+        <item name="android:fontFamily">Ubuntu-L.tff</item>
     </style>
 
 </resources>

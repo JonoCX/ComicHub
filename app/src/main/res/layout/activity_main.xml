@@ -7,6 +7,72 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="uk.ac.ncl.j_carlton.comichub.MainActivity">
+    tools:context="uk.ac.ncl.j_carlton.comichub.MainActivity"
+    android:background="#ffffff">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/logo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/login_user"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="109dp"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:hint="Username" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/user_pass"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/login_user"
+        android:layout_alignEnd="@+id/login_user"
+        android:password="true"
+        android:hint="Password" />
+
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:id="@+id/register_btn"
+        android:background="#cc571d"
+        android:layout_alignTop="@+id/login_btn"
+        android:layout_alignStart="@+id/user_pass" />
+
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/login_btn"
+        android:textColor="#ffffff"
+        android:background="#cc571d"
+        android:singleLine="true"
+        android:height="10dp"
+        android:width="10dp"
+        android:layout_below="@+id/user_pass"
+        android:layout_alignEnd="@+id/user_pass"
+        android:layout_marginTop="49dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/textViewLogin"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:textColor="#cc571d"
+        android:textSize="32sp" />
 
 </RelativeLayout>
