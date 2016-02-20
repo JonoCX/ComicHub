@@ -48,7 +48,8 @@
         android:id="@+id/register_btn"
         android:background="#cc571d"
         android:layout_alignTop="@+id/login_btn"
-        android:layout_alignStart="@+id/user_pass" />
+        android:layout_alignStart="@+id/user_pass"
+        android:onClick="goToRegister"/>
 
     <Button
         android:layout_width="125dp"
