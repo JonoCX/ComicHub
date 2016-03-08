@@ -1,5 +1,6 @@
 package uk.ac.ncl.j_carlton.comichub;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,12 @@ public class MainActivity extends AppCompatActivity {
     EditText username;
     EditText password;
 
+//    private static final String[] LOCATION_PERMS={
+//            Manifest.permission.ACCESS_FINE_LOCATION,
+//            Manifest.permission.ACCESS_COARSE_LOCATION
+//    };
+//    private static final int INITIAL_REQUEST=1337;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         username = (EditText) findViewById(R.id.login_user);
         password = (EditText) findViewById(R.id.user_pass);
+
+        //requestPermissions(LOCATION_PERMS, INITIAL_REQUEST);
     }
 
     public void clearForm(View view) {
@@ -43,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view  the view which was click
      */
     public void goToRegister(View view) {
-        Intent intent = new Intent(this, Register.class);
+        Intent intent = new Intent(this, NearMe.class);
         startActivity(intent);
     }
 
@@ -56,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             String response = new ConnectAndLogin(username.getText().toString(), password.getText().toString()).execute().get();
             String uName = username.getText().toString();
             if (response.equals(uName)) {
-                Intent intent = new Intent(this, LandingScreen.class);
+                Intent intent = new Intent(this, NearMe.class);
                 intent.putExtra("username", uName);
             }
         } catch (InterruptedException | ExecutionException e) {
