@@ -10,14 +10,60 @@
     tools:context=".LandingScreen"
     android:background="#ffffff">
 
-    <!--<ImageView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:layout_marginTop="26dp"
         android:src="@drawable/logo"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />-->
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Add to Library"
+        android:id="@+id/add_library_btn"
+        android:background="#cc571d"
+        android:layout_below="@+id/imageView"
+        android:layout_marginTop="36dp"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
+
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="View Library"
+        android:id="@+id/view_library_btn"
+        android:background="#cc571d"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/add_library_btn"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignStart="@+id/imageView" />
+
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Find Stores Near Me"
+        android:id="@+id/button2"
+        android:background="#cc571d"
+        android:layout_marginTop="38dp"
+        android:layout_below="@+id/view_library_btn"
+        android:layout_alignEnd="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:onClick="openGoogleMapsSearch" />
+
+    <Button
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/logout_btn"
+        android:background="#cc571d"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_alignEnd="@+id/button2"
+        android:layout_alignStart="@+id/button2"
+        android:onClick="logout" />
 
 
 </RelativeLayout>

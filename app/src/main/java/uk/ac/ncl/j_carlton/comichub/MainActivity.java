@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
      * @param view  the view which was click
      */
     public void goToRegister(View view) {
-        Intent intent = new Intent(this, NearMe.class);
+        Intent intent = new Intent(this, Register.class);
         startActivity(intent);
     }
 
@@ -61,12 +61,17 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void login(View view) {
+        if (username.getText().toString().isEmpty() || password.getText().toString().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "A field is empty.", Toast.LENGTH_LONG).show();
+            startActivity(getIntent());
+        }
         try {
             String response = new ConnectAndLogin(username.getText().toString(), password.getText().toString()).execute().get();
             String uName = username.getText().toString();
             if (response.equals(uName)) {
-                Intent intent = new Intent(this, NearMe.class);
+                Intent intent = new Intent(this, LandingScreen.class);
                 intent.putExtra("username", uName);
+                startActivity(intent);
             }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
@@ -89,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            String response = "";
+
 
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -134,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return response;
+            return "";
         }
 
         private void close(ResultSet r, Statement s, Connection c) {
