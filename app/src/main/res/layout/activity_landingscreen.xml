@@ -28,7 +28,8 @@
         android:layout_below="@+id/imageView"
         android:layout_marginTop="36dp"
         android:layout_alignEnd="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:layout_alignStart="@+id/imageView"
+        android:onClick="addToLibrary" />
 
     <Button
         android:layout_width="125dp"
@@ -39,7 +40,8 @@
         android:layout_marginTop="33dp"
         android:layout_below="@+id/add_library_btn"
         android:layout_alignEnd="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:layout_alignStart="@+id/imageView"
+        android:onClick="viewLibrary" />
 
     <Button
         android:layout_width="125dp"
