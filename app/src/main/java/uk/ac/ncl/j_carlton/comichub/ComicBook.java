@@ -52,16 +52,10 @@ public class ComicBook {
      */
     @Override
     public String toString() {
-        return "ComicBook{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", volume='" + volume + '\'' +
-                ", issue=" + issue +
-                ", publisher='" + publisher + '\'' +
-                ", published_date='" + published_date + '\'' +
-                ", image_ref='" + image_ref + '\'' +
-                ", in_library=" + in_library +
-                '}';
+        if (name == null) {
+            return volume + "\n" + issue;
+        }
+        return name + "\n" + issue;
     }
 
     /**
