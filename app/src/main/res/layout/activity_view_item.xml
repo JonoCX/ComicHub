@@ -28,7 +28,7 @@
         android:layout_marginTop="15dp" />
 
     <Button
-        android:layout_width="125dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="New Button"
         android:id="@+id/add_remove_btn"
@@ -44,7 +44,8 @@
         android:id="@+id/name"
         android:layout_below="@+id/coverArt"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
         android:id="@+id/volume"
         android:layout_below="@+id/name"
         android:layout_alignStart="@+id/name"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,7 +64,8 @@
         android:id="@+id/issue"
         android:layout_below="@+id/volume"
         android:layout_alignStart="@+id/volume"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +74,8 @@
         android:id="@+id/publisher"
         android:layout_below="@+id/issue"
         android:layout_alignStart="@+id/issue"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,7 +84,8 @@
         android:id="@+id/published_date"
         android:layout_below="@+id/publisher"
         android:layout_alignStart="@+id/publisher"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:gravity="center"/>
 
 
 </RelativeLayout>
