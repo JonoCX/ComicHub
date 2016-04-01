@@ -33,6 +33,9 @@ public class ComicBookAdapter extends ArrayAdapter<ComicBook> {
         else
             name.setText(cb.getName());
         issue.setText("Issue #: " + cb.getIssue());
+
+        name.setTextSize(16);
+        issue.setTextSize(16);
         return convertView;
     }
 }

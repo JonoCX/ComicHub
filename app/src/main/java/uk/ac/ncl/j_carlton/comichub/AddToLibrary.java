@@ -13,12 +13,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.analytics.ecommerce.Product;
 
@@ -37,6 +39,7 @@ public class AddToLibrary extends AppCompatActivity {
     private ListView listView;
     private Button search_btn;
     List<ComicBook> comicBookList;
+    private String searchQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,33 @@ public class AddToLibrary extends AppCompatActivity {
                 btnOnClick();
             }
         });
+
+        //final ArrayList<ComicBook> results = doSearch(comicBookList, searchQuery);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listViewOnClick(position)) {}
+                else {
+                    Toast.makeText(getBaseContext(), "Search field empty", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    private boolean listViewOnClick(int position) {
+        if (searchQuery != null) {
+            ArrayList<ComicBook> results = doSearch(comicBookList, searchQuery);
+            ComicBook item = results.get(position);
+            //Toast.makeText(getBaseContext(), item.toString(), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, ViewItem.class);
+            intent.putExtra("ComicBook", item);
+
+            // User wants to add, tell the view item that is the case.
+            intent.putExtra("intent", "add");
+            startActivity(intent);
+            return true;
+        }
+        return false;
     }
 
     private void btnOnClick() {
@@ -69,6 +99,7 @@ public class AddToLibrary extends AppCompatActivity {
         listView.setAdapter(adapter);
         results = doSearch(comicBookList, query);
         adapter.addAll(results);
+        searchQuery = query;
     }
 
     private ArrayList<ComicBook> doSearch(List<ComicBook> list, String query) {
@@ -76,79 +107,14 @@ public class AddToLibrary extends AppCompatActivity {
 
         for (ComicBook cb : list) {
             System.out.println(cb);
-            if (cb.getName() == null && cb.getVolume().contains(query))
+            if (cb.getName() == null && cb.getVolume().toLowerCase().contains(query.toLowerCase()))
                 data.add(cb);
             if (cb.getName() != null) {
-                if (cb.getName().contains(query) || cb.getVolume().contains(query))
+                if (cb.getName().toLowerCase().contains(query.toLowerCase()) || cb.getVolume().toLowerCase().contains(query.toLowerCase()))
                     data.add(cb);
             }
         }
 
         return data;
     }
-
-
-    /**
-     *
-     */
-    private class FetchComicBooks extends AsyncTask<String, Void, List<ComicBook>> {
-        // data base authentication variables
-        private final String dbURL = "jdbc:mysql://mysqldbinstance.cchftrgjl5qm.eu-west-1.rds.amazonaws.com:3306/comichub";
-        private final String dbUserName = "comicaccess";
-        private final String dbPass = "Password123";
-
-        /**
-         *
-         * @param params
-         * @return
-         */
-        @Override
-        protected List<ComicBook> doInBackground(String... params) {
-            List<ComicBook> list = new ArrayList<>();
-
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection connection = DriverManager.getConnection(dbURL, dbUserName, dbPass);
-                String query = "SELECT * FROM comics";
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                Log.i("Query", "Executing query: " + query);
-
-                while (resultSet.next()) {
-                    int in_library = resultSet.getInt("inLibrary");
-                    if (in_library == 0) {
-                        list.add(new ComicBook(
-                                resultSet.getInt("id"),
-                                resultSet.getString("name"),
-                                resultSet.getString("volume"),
-                                resultSet.getInt("issue"),
-                                resultSet.getString("publisher"),
-                                resultSet.getString("publish-date"),
-                                resultSet.getString("image-ref"),
-                                false
-                        ));
-                    } else {
-                        list.add(new ComicBook(
-                                resultSet.getInt("id"),
-                                resultSet.getString("name"),
-                                resultSet.getString("volume"),
-                                resultSet.getInt("issue"),
-                                resultSet.getString("publisher"),
-                                resultSet.getString("publish-date"),
-                                resultSet.getString("image-ref"),
-                                true
-                        ));
-                    }
-                }
-
-                for (ComicBook b: list)
-                    System.out.println(b.toString());
-            } catch (ClassNotFoundException | SQLException e) {
-                e.printStackTrace();
-            }
-
-            return list;
-        }
-    }
-
 }

@@ -1,14 +1,21 @@
 package uk.ac.ncl.j_carlton.comichub;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Object representation of a Comic Book.
  *
  * The generally usage of this class will be inline with the
  * data that is stored on the AWS database.
  *
+ * Implements Parcelable as the de-facto method for passing
+ * objects between activities.
+ *
  * @author Jonathan Carlton - 130266400
  */
-public class ComicBook {
+
+public class ComicBook implements Parcelable {
 
     /*
         Object variables.
@@ -18,9 +25,9 @@ public class ComicBook {
     private String volume;
     private int issue;
     private String publisher;
-    private String published_date;
-    private String image_ref;
-    private boolean in_library;
+    private String publishedDate;
+    private String imageRef;
+    private boolean inLibrary;
 
     /**
      * Class constructor.
@@ -30,19 +37,36 @@ public class ComicBook {
      * @param volume            the volume of which the comic book is a part of
      * @param issue             the issue number
      * @param publisher         the comic book publisher
-     * @param published_date    when the comic book was published
-     * @param image_ref         a reference to the cover art work
-     * @param in_library        is the object in the library?
+     * @param publishedDate    when the comic book was published
+     * @param imageRef         a reference to the cover art work
+     * @param inLibrary        is the object in the library?
      */
-    public ComicBook(int id, String name, String volume, int issue, String publisher, String published_date, String image_ref, boolean in_library) {
+    public ComicBook(int id, String name, String volume, int issue, String publisher, String publishedDate, String imageRef, boolean inLibrary) {
         this.id = id;
         this.name = name;
         this.volume = volume;
         this.issue = issue;
         this.publisher = publisher;
-        this.published_date = published_date;
-        this.image_ref = image_ref;
-        this.in_library = in_library;
+        this.publishedDate = publishedDate;
+        this.imageRef = imageRef;
+        this.inLibrary = inLibrary;
+    }
+
+    /**
+     * Create a ComicBook object from a Parcel
+     * @param in    Parcel containing the parameters for the object.
+     */
+    public ComicBook(Parcel in) {
+        String[] data = new String[8];
+        in.readStringArray(data);
+        this.id = Integer.parseInt(data[0]);
+        this.name = data[1];
+        this.volume = data[2];
+        this.issue = Integer.parseInt(data[3]);
+        this.publisher = data[4];
+        this.publishedDate = data[5];
+        this.imageRef = data[6];
+        this.inLibrary = Boolean.parseBoolean(data[7]);
     }
 
     /**
@@ -73,14 +97,14 @@ public class ComicBook {
 
         if (getId() != comicBook.getId()) return false;
         if (getIssue() != comicBook.getIssue()) return false;
-        if (isIn_library() != comicBook.isIn_library()) return false;
+        if (isInLibrary() != comicBook.isInLibrary()) return false;
         if (getName() != null ? !getName().equals(comicBook.getName()) : comicBook.getName() != null)
             return false;
         if (getVolume() != null ? !getVolume().equals(comicBook.getVolume()) : comicBook.getVolume() != null)
             return false;
         if (getPublisher() != null ? !getPublisher().equals(comicBook.getPublisher()) : comicBook.getPublisher() != null)
             return false;
-        return getPublished_date() != null ? getPublished_date().equals(comicBook.getPublished_date()) : comicBook.getPublished_date() == null;
+        return getPublishedDate() != null ? getPublishedDate().equals(comicBook.getPublishedDate()) : comicBook.getPublishedDate() == null;
 
     }
 
@@ -95,7 +119,7 @@ public class ComicBook {
         result = 31 * result + (getVolume() != null ? getVolume().hashCode() : 0);
         result = 31 * result + getIssue();
         result = 31 * result + (getPublisher() != null ? getPublisher().hashCode() : 0);
-        result = 31 * result + (getPublished_date() != null ? getPublished_date().hashCode() : 0);
+        result = 31 * result + (getPublishedDate() != null ? getPublishedDate().hashCode() : 0);
         return result;
     }
 
@@ -116,14 +140,14 @@ public class ComicBook {
     public String getPublisher() {
         return publisher;
     }
-    public String getPublished_date() {
-        return published_date;
+    public String getPublishedDate() {
+        return publishedDate;
     }
-    public String getImage_ref() {
-        return image_ref;
+    public String getImageRef() {
+        return imageRef;
     }
-    public boolean isIn_library() {
-        return in_library;
+    public boolean isInLibrary() {
+        return inLibrary;
     }
 
     /**
@@ -145,14 +169,44 @@ public class ComicBook {
     public void setPublisher(String publisher) {
         this.publisher = publisher;
     }
-    public void setPublished_date(String published_date) {
-        this.published_date = published_date;
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
     }
-    public void setImage_ref(String image_ref) {
-        this.image_ref = image_ref;
+    public void setImageRef(String imageRef) {
+        this.imageRef = imageRef;
     }
-    public void setIn_library(boolean in_library) {
-        this.in_library = in_library;
+    public void setInLibrary(boolean inLibrary) {
+        this.inLibrary = inLibrary;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[]{
+                Integer.toString(this.getId()),
+                this.getName(),
+                this.getVolume(),
+                Integer.toString(this.getIssue()),
+                this.getPublisher(),
+                this.getPublishedDate(),
+                this.getImageRef(),
+                Boolean.toString(this.isInLibrary())
+        });
+    }
+
+    public static final Parcelable.Creator<ComicBook> CREATOR = new Parcelable.Creator<ComicBook>() {
+        @Override
+        public ComicBook createFromParcel(Parcel source) {
+            return new ComicBook(source);
+        }
+
+        @Override
+        public ComicBook[] newArray(int size) {
+            return new ComicBook[size];
+        }
+    };
 }

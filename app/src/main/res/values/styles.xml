@@ -16,6 +16,10 @@
         <item name="android:fontFamily">Ubuntu-L.tff</item>
     </style>
 
+    <style name="ListView" parent="Widget.AppCompat.ListView">
+        <item name="android:fontFamily">Ubuntu-L.tff</item>
+    </style>
+
     <style name="TextView" parent="android:Widget.TextView">
         <item name="android:fontFamily">Ubuntu-L.tff</item>
     </style>
@@ -23,5 +27,18 @@
     <style name="TextFields" parent="android:Widget.EditText">
         <item name="android:fontFamily">Ubuntu-L.tff</item>
     </style>
+
+    <style name="EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">Ubuntu-L.tff</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
