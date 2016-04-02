@@ -179,11 +179,44 @@ public class ComicBook implements Parcelable {
         this.inLibrary = inLibrary;
     }
 
+    public static final Parcelable.Creator<ComicBook> CREATOR = new Parcelable.Creator<ComicBook>() {
+        /**
+         * Take a parcel and convert it into a comic book object
+         * @param source    the parcel to be converted
+         * @return the new object created from the contents of the parcel
+         */
+        @Override
+        public ComicBook createFromParcel(Parcel source) {
+            return new ComicBook(source);
+        }
+
+        /**
+         * Create a comic book array
+         * @param size      of a particular size
+         * @return the array
+         */
+        @Override
+        public ComicBook[] newArray(int size) {
+            return new ComicBook[size];
+        }
+    };
+
+    /**
+     * Has to be overridden as part of the implementation of the class
+     *
+     * @return 0
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     * Write the current object to a parcel object ready to be
+     * transferred between activities.
+     * @param dest      the destination parcel
+     * @param flags     any flags needed
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[]{
@@ -197,16 +230,4 @@ public class ComicBook implements Parcelable {
                 Boolean.toString(this.isInLibrary())
         });
     }
-
-    public static final Parcelable.Creator<ComicBook> CREATOR = new Parcelable.Creator<ComicBook>() {
-        @Override
-        public ComicBook createFromParcel(Parcel source) {
-            return new ComicBook(source);
-        }
-
-        @Override
-        public ComicBook[] newArray(int size) {
-            return new ComicBook[size];
-        }
-    };
 }

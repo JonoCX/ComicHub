@@ -1,9 +1,8 @@
 package uk.ac.ncl.j_carlton.comichub;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -14,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -24,6 +24,7 @@ public class ViewLibrary extends AppCompatActivity implements View.OnClickListen
     Map<String, Integer> sideIndex;
     ListView library;
     ArrayList<ComicBook> arr;
+    Map<String, Integer> sortedSideIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +68,15 @@ public class ViewLibrary extends AppCompatActivity implements View.OnClickListen
                 i++;
             }
         }
+        // sort map by keys
+        Map<String, Integer> map = new TreeMap<>(sideIndex);
+        sortedSideIndex = map;
     }
 
     private void displayIndex() {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.side_index);
         TextView textView;
-        List<String> indexList = new ArrayList<>(sideIndex.keySet());
+        List<String> indexList = new ArrayList<>(sortedSideIndex.keySet());
         for (String s : indexList) {
             textView = (TextView) getLayoutInflater().inflate(R.layout.index_side, null);
             textView.setText(s);

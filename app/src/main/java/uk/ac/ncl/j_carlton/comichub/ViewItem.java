@@ -1,11 +1,9 @@
 package uk.ac.ncl.j_carlton.comichub;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.concurrent.ExecutionException;
@@ -22,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 public class ViewItem extends AppCompatActivity {
 
     ComicBook comicBook;
+    String searchQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +27,8 @@ public class ViewItem extends AppCompatActivity {
         setContentView(R.layout.activity_view_item);
         comicBook = getIntent().getParcelableExtra("ComicBook");
         String activityIntent = getIntent().getStringExtra("intent");
-
+        if (getIntent().hasExtra("search"))
+            searchQuery = getIntent().getStringExtra("search");
         // Set image
         ImageView coverArt = (ImageView) findViewById(R.id.coverArt);
         String imageRef = comicBook.getImageRef();
@@ -44,14 +43,19 @@ public class ViewItem extends AppCompatActivity {
         TextView publisher = (TextView) findViewById(R.id.publisher);
         TextView published = (TextView) findViewById(R.id.published_date);
         String nameCb = comicBook.getName();
-        if (nameCb != null)
+        if (nameCb != null) {
             name.setText("Name: " + nameCb);
-        else
-            name.setVisibility(View.GONE);
-        volume.setText("Volume: " + comicBook.getVolume());
-        issue.setText("Issue #: " + comicBook.getIssue());
-        publisher.setText("Publisher: " + comicBook.getPublisher());
-        published.setText("Published: " + comicBook.getPublishedDate());
+            volume.setText("Volume: " + comicBook.getVolume());
+            issue.setText("Issue #: " + comicBook.getIssue());
+            publisher.setText("Publisher: " + comicBook.getPublisher());
+            published.setText("Published: " + comicBook.getPublishedDate());
+        } else {
+            name.setText("Volume: " + comicBook.getVolume());
+            volume.setText("Issue #: " + comicBook.getIssue());
+            issue.setText("Publisher: " + comicBook.getPublisher());
+            publisher.setText("Published: " + comicBook.getPublishedDate());
+            published.setText("");
+        }
 
         if (activityIntent.equals("add")) {
             addToLibrary();
@@ -92,6 +96,7 @@ public class ViewItem extends AppCompatActivity {
                 boolean success = new updateComicBook().execute(res).get();
                 Toast.makeText(getBaseContext(), "Added to Library", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(this, AddToLibrary.class);
+                intent.putExtra("search", searchQuery);
                 startActivity(intent);
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
@@ -107,10 +112,6 @@ public class ViewItem extends AppCompatActivity {
         }
     }
 
-    /*
-        TODO http://androidopentutorials.com/android-listview-with-alphabetical-side-index/
-
-     */
 
     private class updateComicBook extends AsyncTask<Boolean, Void, Boolean> {
         private final String dbURL = "jdbc:mysql://mysqldbinstance.cchftrgjl5qm.eu-west-1.rds.amazonaws.com:3306/comichub";
