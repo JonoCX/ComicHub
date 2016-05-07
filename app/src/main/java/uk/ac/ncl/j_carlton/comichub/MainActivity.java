@@ -90,6 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("username", uName);
                 startActivity(intent);
             }
+
+            if (response.equals("pw not equal")) {
+                Toast.makeText(getApplicationContext(), "Password is incorrect", Toast.LENGTH_LONG).show();
+                startActivity(getIntent());
+            }
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
