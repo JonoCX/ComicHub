@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.login_user);
         password = (EditText) findViewById(R.id.user_pass);
 
+        if (getIntent().hasExtra("username"))
+            username.setText(getIntent().getStringExtra("username"));
+
         // if enter is pressed on the keyboard then attempt to log in
         password.setOnKeyListener(new View.OnKeyListener() {
             @Override

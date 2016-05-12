@@ -75,6 +75,7 @@ public class Register extends AppCompatActivity {
         // execute the registration task
         new ConnectAndRegister(userName, uPass, uEmail).execute();
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("username", userName);
         startActivity(intent);
 
     }

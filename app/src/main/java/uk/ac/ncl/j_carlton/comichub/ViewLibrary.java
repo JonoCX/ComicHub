@@ -36,6 +36,7 @@ public class ViewLibrary extends AppCompatActivity implements View.OnClickListen
         ComicBookAdapter adapter = new ComicBookAdapter(this, arr);
         library.setAdapter(adapter);
         arr = getLibrary();
+
         adapter.addAll(arr);
 
         getIndexList(arr);
